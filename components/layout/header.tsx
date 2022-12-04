@@ -14,7 +14,7 @@ import { showToast } from "./toast";
 // components
 
 const Header: FC = () => {
-  const { user, setUser, connectWallet } = useContext(
+  const { user, userData, connectWallet } = useContext(
     WalletAuthContext
   ) as WalletAuthContextType;
 
@@ -110,7 +110,11 @@ const Header: FC = () => {
                 id="userModal"
                 className="absolute py-3 px-5 z-10 bg-[#8247e5] rounded-2xl top-[110%] right-2 text-white text-center"
               >
-                Heyy modal
+                {userData ? (
+                  <div className="py-3">{userData?.balance} MATIC</div>
+                ) : (
+                  <></>
+                )}
               </div>
             ) : (
               <></>

@@ -4,6 +4,12 @@ declare global {
   interface Window {
     ethereum?: MetaMaskInpageProvider;
   }
+
+  namespace NodeJS {
+    interface ProcessEnv {
+      NEXT_PUBLIC_CONTRACT_ADDRESS: string;
+    }
+  }
 }
 
 // If this file has no import/export statements (i.e. is a script)

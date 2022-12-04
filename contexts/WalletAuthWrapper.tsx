@@ -10,16 +10,21 @@ import {
 import { ethers } from "ethers";
 import { Web3Provider, ExternalProvider } from "@ethersproject/providers";
 import { networks } from "../utils/networks";
-//   import contractAbi from "../utils/contractAbi.json";
-//   import { SupplyChainContract } from "../utils/SupplyChainContract";
+import contractAbi from "../utils/contractAbi.json";
+import { ChainAidContract } from "../utils/ChainAidContract";
 
 interface WalletAuthContextType {
   user: string | null | undefined;
   setUser: Dispatch<SetStateAction<string | null | undefined>>;
-  // userData: UserProfile | null;
-  // setUserData: Dispatch<SetStateAction<UserProfile | null>>;
-  // contract?: SupplyChainContract;
+  userData: UserProfile | null;
+  setUserData: Dispatch<SetStateAction<UserProfile | null>>;
+  contract?: ChainAidContract;
   connectWallet: () => Promise<void>;
+}
+
+interface UserProfile {
+  walletKey: string;
+  balance: string;
 }
 
 const WalletAuthContext = createContext<WalletAuthContextType | null>(null);
@@ -27,10 +32,10 @@ const WalletAuthContext = createContext<WalletAuthContextType | null>(null);
 const WalletAuthWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   // states
   const [user, setUser] = useState<string | null | undefined>(undefined);
-  // const [userData, setUserData] = useState<UserProfile | null>(null);
+  const [userData, setUserData] = useState<UserProfile | null>(null);
   const [provider, setProvider] = useState<Web3Provider>();
   const [network, setNetwork] = useState("");
-  // const [contract, setContract] = useState<SupplyChainContract>();
+  const [contract, setContract] = useState<ChainAidContract>();
 
   const connectWallet = async () => {
     try {
@@ -139,55 +144,43 @@ const WalletAuthWrapper: FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     checkIfWalletIsConnected();
+    switchNetwork();
   }, []);
 
+  useEffect(() => {
+    if (user)
+      provider?.getBalance(user).then((bal) => {
+        let tempUserData: UserProfile = {
+          walletKey: user,
+          balance: Number(ethers.utils.formatEther(bal)).toFixed(3),
+        };
+
+        setUserData(tempUserData);
+      });
+  });
+
   // connect contract
-  //   useEffect(() => {
-  //     if (user && !contract) {
-  //       const signer = provider?.getSigner();
-  //       const supplyChainContract = new ethers.Contract(
-  //         process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-  //         contractAbi.abi,
-  //         signer
-  //       ) as unknown as SupplyChainContract;
+  useEffect(() => {
+    if (user && !contract) {
+      const signer = provider?.getSigner();
+      const chainAidContract = new ethers.Contract(
+        process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+        contractAbi.abi,
+        signer
+      ) as unknown as ChainAidContract;
 
-  //       setContract(supplyChainContract);
-
-  //       let tempUserData: UserProfile = {
-  //         walletKey: user,
-  //         balance: "0",
-  //       };
-
-  //       supplyChainContract.users(user).then((val) => {
-  //         if (val.name !== "")
-  //           tempUserData = {
-  //             ...tempUserData,
-  //             name: val.name,
-  //             type: val.uType ? "Supplier" : "Manufacturer",
-  //           };
-
-  //         provider?.getBalance(user).then((bal) => {
-  //           tempUserData = {
-  //             ...tempUserData,
-  //             balance: Number(ethers.utils.formatEther(bal)).toFixed(3),
-  //           };
-
-  //           setUserData(tempUserData);
-  //         });
-  //       });
-  //     }
-  //   }, [provider, user, contract, router]);
-
-  // get user details from contract
+      setContract(chainAidContract);
+    }
+  }, [provider, user, contract]);
 
   return (
     <WalletAuthContext.Provider
       value={{
         user,
         setUser,
-        // userData,
-        // setUserData,
-        //   contract,
+        userData,
+        setUserData,
+        contract,
         connectWallet,
       }}
     >

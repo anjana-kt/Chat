@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import {
   WalletAuthContext,
@@ -25,12 +26,17 @@ export default function Home() {
       </h2>
 
       <div className="flex mt-20 gap-x-5 pb-40">
-        <button className="p-10 bg-white bg-opacity-20 rounded-3xl text-xl">
-          Join as an Organization
-        </button>
-        <button className="p-10 bg-white bg-opacity-20 rounded-3xl text-xl">
-          Join as a Support Member
-        </button>
+        <Link href={"/org/new"}>
+          <button className="p-10 bg-white bg-opacity-20 rounded-3xl text-xl">
+            Join as an Organization
+          </button>
+        </Link>
+
+        <Link href={"/mentor/new"}>
+          <button className="p-10 bg-white bg-opacity-20 rounded-3xl text-xl">
+            Join as a Support Member
+          </button>
+        </Link>
       </div>
     </>
   );

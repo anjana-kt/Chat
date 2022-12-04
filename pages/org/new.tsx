@@ -2,15 +2,30 @@ import { FC, FormEvent, useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
+import { ethers } from "ethers";
 import RingSpinner from "../../components/loaders/ringSpinner";
+import {
+  WalletAuthContext,
+  WalletAuthContextType,
+} from "../../contexts/WalletAuthWrapper";
 
 const Organization: FC = () => {
   const [name, setName] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const { contract } = useContext(WalletAuthContext) as WalletAuthContextType;
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
+    if (contract) {
+      await contract.addOrg(name, {
+        value: ethers.utils.parseEther("0.1"),
+      });
+    }
+
+    setLoading(false);
   };
   return (
     <>
