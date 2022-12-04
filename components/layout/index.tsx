@@ -12,7 +12,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     <div className="bg-slate-900 min-h-screen text-white flex flex-col">
       <Header />
 
-      <main className="flex-grow flex items-center justify-center">
+      <main className="flex-grow flex items-center justify-center flex-col">
         {children}
       </main>
 

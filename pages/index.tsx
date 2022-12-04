@@ -1,114 +1,16 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import {
+  WalletAuthContext,
+  WalletAuthContextType,
+} from "../contexts/WalletAuthWrapper";
 import { networks } from "../utils/networks";
 
 export default function Home() {
-  const [currentAccount, setCurrentAccount] = useState("");
-  const [network, setNetwork] = useState("");
-
-  const connectWallet = async () => {
-    try {
-      const { ethereum } = window;
-
-      if (!ethereum) {
-        alert("Get MetaMask -> https://metamask.io/");
-        return;
-      }
-
-      const accounts = (await ethereum.request({
-        method: "eth_requestAccounts",
-      })) as string[];
-
-      console.log("Connected", accounts[0]);
-      setCurrentAccount(accounts[0]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const checkIfWalletIsConnected = async () => {
-    const { ethereum } = window;
-
-    if (!ethereum) {
-      console.log("Make sure you have metamask!");
-      return;
-    } else {
-      console.log("We have the ethereum object", ethereum);
-    }
-
-    const accounts = (await ethereum.request({
-      method: "eth_accounts",
-    })) as string[];
-
-    if (accounts.length !== 0) {
-      const account = accounts[0];
-      console.log("Found an authorized account:", account);
-      setCurrentAccount(account);
-    } else {
-      console.log("No authorized account found");
-    }
-
-    const chainId = await ethereum.request({ method: "eth_chainId" });
-    // @ts-ignore
-    setNetwork(networks[chainId]);
-
-    ethereum.on("chainChanged", handleChainChanged);
-
-    // Reload the page when they change networks
-    // @ts-ignore
-    function handleChainChanged(_chainId) {
-      window.location.reload();
-    }
-  };
-
-  const switchNetwork = async () => {
-    if (window.ethereum) {
-      try {
-        // Try to switch to the Mumbai testnet
-        await window.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: "0x13881" }], // Check networks.js for hexadecimal network ids
-        });
-      } catch (error) {
-        // This error code means that the chain we want has not been added to MetaMask
-        // In this case we ask the user to add it to their MetaMask
-        // @ts-ignore
-        if (error.code === 4902) {
-          try {
-            await window.ethereum.request({
-              method: "wallet_addEthereumChain",
-              params: [
-                {
-                  chainId: "0x13881",
-                  chainName: "Polygon Mumbai Testnet",
-                  rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
-                  nativeCurrency: {
-                    name: "Mumbai Matic",
-                    symbol: "MATIC",
-                    decimals: 18,
-                  },
-                  blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-                },
-              ],
-            });
-          } catch (error) {
-            console.log(error);
-          }
-        }
-        console.log(error);
-      }
-    } else {
-      // If window.ethereum is not found then MetaMask is not installed
-      alert(
-        "MetaMask is not installed. Please install it to use this app: https://metamask.io/download.html"
-      );
-    }
-  };
-
-  useEffect(() => {
-    checkIfWalletIsConnected();
-  }, []);
+  const { user, setUser, connectWallet } = useContext(
+    WalletAuthContext
+  ) as WalletAuthContextType;
 
   return (
     <>
@@ -118,12 +20,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-3xl">
-        Welcome{" "}
-        {currentAccount
-          ? `${currentAccount.slice(0, 4)}...${currentAccount.slice(38, 42)}`
-          : "User"}
-      </h1>
+      <h2 className="text-3xl">
+        Welcome {user ? `${user.slice(0, 4)}...${user.slice(38, 42)}` : "User"}
+      </h2>
+
+      <div className="flex mt-20 gap-x-5 pb-40">
+        <button className="p-10 bg-white bg-opacity-20 rounded-3xl text-xl">
+          Join as an Organization
+        </button>
+        <button className="p-10 bg-white bg-opacity-20 rounded-3xl text-xl">
+          Join as a Support Member
+        </button>
+      </div>
     </>
   );
 }
