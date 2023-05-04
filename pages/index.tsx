@@ -37,6 +37,12 @@ export default function Home() {
             Join as a Support Member
           </button>
         </Link>
+
+        <Link href={"/chat"}>
+          <button className="p-10 bg-white bg-opacity-20 rounded-3xl text-xl">
+            Demo
+          </button>
+        </Link>
       </div>
     </>
   );
