@@ -14,8 +14,9 @@ const Supporter: FC = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [contact, setContact] = useState<string>("");
+  const [skills, setSkills] = useState<string>("");
   const [url, setUrl] = useState<string>("");
-  const [value, setValue] = useState<string>("");
+
   const [provider, setProvider] = useState<Web3Provider>();
 
   const [loading, setLoading] = useState(false);
@@ -72,61 +73,70 @@ const Supporter: FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>
+      <div className="w-full content-center">
         <form
-          className="p-10 max-w-xl mx-auto flex flex-col items-center text-black"
+          className="bg-cyan-700 shadow-md p-10 max-w-xl mx-auto flex flex-col items-center text-black"
           onSubmit={handleSubmit}
         >
-          <input
-            id="name"
-            type="text"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            placeholder="Name"
-            required
-            className="outline-none font-medium w-full py-2 px-3 rounded-md border border-black border-opacity-20 focus:shadow focus:ring-1 focus:ring-black"
-            maxLength={100}
-          />
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            placeholder="Email"
-            required
-            className="outline-none font-medium w-full py-2 px-3 rounded-md border border-black border-opacity-20 focus:shadow focus:ring-1 focus:ring-black"
-            maxLength={100}
-          />
-          <input
-            id="contact"
-            type="text"
-            value={contact}
-            onChange={(e) => {
-              setContact(e.target.value);
-            }}
-            placeholder="Contact"
-            required
-            className="outline-none font-medium w-full py-2 px-3 rounded-md border border-black border-opacity-20 focus:shadow focus:ring-1 focus:ring-black"
-            maxLength={100}
-          />
-
-          <input
-            id="value"
-            type="number"
-            value={value}
-            onChange={(e) => {
-              setValue(e.target.value);
-            }}
-            placeholder="Deposit value"
-            required
-            className="outline-none font-medium w-full py-2 px-3 rounded-md border border-black border-opacity-20 focus:shadow focus:ring-1 focus:ring-black"
-            maxLength={100}
-          />
-
+          <h1 className="mb-10 text-3xl font-extrabold leading-none tracking-tight text-gray-500 md:text-5xl lg:text-3xl dark:text-white">
+            Register as Support Member
+          </h1>
+          <div className="mb-6 w-full">
+            <input
+              id="name"
+              type="text"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              placeholder="Name"
+              required
+              className="outline-none font-medium w-full py-2 px-3 rounded-md border border-black border-opacity-20 focus:shadow focus:ring-1 focus:ring-black"
+              maxLength={100}
+            />
+          </div>
+          <div className="mb-6 w-full">
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              placeholder="Email"
+              required
+              className="outline-none font-medium w-full py-2 px-3 rounded-md border border-black border-opacity-20 focus:shadow focus:ring-1 focus:ring-black"
+              maxLength={100}
+            />
+          </div>
+          <div className="mb-6 w-full">
+            <input
+              id="contact"
+              type="text"
+              value={contact}
+              onChange={(e) => {
+                setContact(e.target.value);
+              }}
+              placeholder="Contact"
+              required
+              className="outline-none font-medium w-full py-2 px-3 rounded-md border border-black border-opacity-20 focus:shadow focus:ring-1 focus:ring-black"
+              maxLength={100}
+            />
+          </div>
+          <div className="mb-6 w-full">
+            <input
+              id="value"
+              type="number"
+              value={skills}
+              onChange={(e) => {
+                setSkills(e.target.value);
+              }}
+              placeholder="Skills"
+              required
+              className="outline-none font-medium w-full py-2 px-3 rounded-md border border-black border-opacity-20 focus:shadow focus:ring-1 focus:ring-black"
+              maxLength={100}
+            />
+          </div>
           <button
             type="submit"
             disabled={loading}

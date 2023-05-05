@@ -43,10 +43,10 @@ const Organization: FC = () => {
 
       <div className="w-full content-center">
         <form
-          className="bg-slate-400 shadow-md p-10 max-w-xl mx-auto flex flex-col items-center text-black"
+          className="bg-cyan-700 shadow-md p-10 max-w-xl mx-auto flex flex-col items-center text-black"
           onSubmit={handleSubmit}
         >
-          <h1 className="mb-10 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-3xl dark:text-white">
+          <h1 className="mb-10 text-3xl font-extrabold leading-none tracking-tight text-gray-500 md:text-5xl lg:text-3xl dark:text-white">
             Register as Organization
           </h1>
           <div className="mb-6 w-full">
