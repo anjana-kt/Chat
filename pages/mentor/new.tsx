@@ -20,15 +20,13 @@ const Supporter: FC = () => {
   const [loading, setLoading] = useState(false);
 
   const { contract } = useContext(WalletAuthContext) as WalletAuthContextType;
-  const checkIfWalletIsConnected = async ():Promise<number|undefined>=> {
-    
+  const checkIfWalletIsConnected = async (): Promise<number | undefined> => {
     return provider?.listAccounts().then((accounts) => {
-
       if (accounts.length > 0) {
         console.log(`Wallet is connected with address: ${accounts[0]}`);
         return 1;
       } else {
-        console.log('Wallet is not connected');
+        console.log("Wallet is not connected");
         return 0;
       }
     });
@@ -38,8 +36,8 @@ const Supporter: FC = () => {
       // window.ethereum is defined
       setProvider(
         new ethers.providers.Web3Provider(
-          window.ethereum as unknown as ExternalProvider
-        )
+          window.ethereum as unknown as ExternalProvider,
+        ),
       );
     } else {
       // window.ethereum is undefined

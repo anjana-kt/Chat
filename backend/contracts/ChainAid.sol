@@ -23,6 +23,7 @@ contract ChainAid {
         uint256 id;
         string name;
         string email;
+        string url;
         string contactNo;
         address _orgAddress;
         uint256 balance;
@@ -39,20 +40,34 @@ contract ChainAid {
         bool isVerified;
     }
 
+    struct Service {
+        uint256 id;
+        address _userAddress;
+        address _supportAddress;
+        string feedback;
+    }
+
     uint public orgCount;
     uint public memberCount;
+    uint public serviceCount;
 
     mapping(address => Org) public Organization;
     mapping(address => bool) RegisteredOrganization;
-    address[] allOrganizations;
 
+    address[] allOrganizations;
     mapping(address => Member) Members;
     mapping(address => bool) RegisteredMember;
     address[] allMembers;
+    mapping(address => Service) public Services;
+    mapping(address => bool) public RegisteredServices;
+    address[] allServces;
+
+    mapping(string => address) public urlAddress;
 
     function addOrg(
         string memory name,
         string memory email,
+        string memory url,
         string memory contactNo
     ) public payable {
         require(msg.value >= 1e17, "Error, deposit must be >= 10 MATIC");
@@ -62,11 +77,14 @@ contract ChainAid {
             orgCount,
             name,
             email,
+            url,
             contactNo,
             msg.sender,
             msg.value,
             false
         );
+
+        urlAddress[url] = msg.sender;
         allOrganizations.push(msg.sender);
         console.log("Added org");
     }
@@ -166,11 +184,25 @@ contract ChainAid {
         return _allMembers;
     }
 
-    function payMember(address payable member) public {
-        uint totalReward = 1e16;
-        uint commission = (2 * totalReward) / 100;
-        uint remainingReward = totalReward - commission;
-        owner.transfer(commission);
-        member.transfer(remainingReward);
+    function payMember(
+        string memory satisfaction,
+        string memory url,
+        address payable suppAddr
+    ) public {
+        require(
+            Organization[urlAddress[url]].balance >= 1e18,
+            "Not enough balance"
+        );
+        if (
+            keccak256(abi.encodePacked(satisfaction)) ==
+            keccak256(abi.encodePacked("YES"))
+        ) {
+            uint totalReward = 1e18;
+            uint commission = (2 * totalReward) / 100;
+            uint remainingReward = totalReward - commission;
+            owner.transfer(commission);
+            suppAddr.transfer(remainingReward);
+            Organization[urlAddress[url]].balance -= totalReward;
+        }
     }
 }
