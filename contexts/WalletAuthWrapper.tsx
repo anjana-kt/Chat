@@ -165,7 +165,7 @@ const WalletAuthWrapper: FC<{ children: ReactNode }> = ({ children }) => {
       const signer = provider?.getSigner();
       const chainAidContract = new ethers.Contract(
         process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-        contractAbi.abi,
+        contractAbi,
         signer
       ) as unknown as ChainAidContract;
 
