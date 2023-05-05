@@ -182,6 +182,7 @@ const WalletAuthWrapper: FC<{ children: ReactNode }> = ({ children }) => {
         setUserData,
         contract,
         connectWallet,
+            
       }}
     >
       {children}
