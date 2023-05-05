@@ -46,10 +46,15 @@ const Header: FC = () => {
   }, []);
 
   return (
-    <header className="py-5 px-10">
+    <header className="py-2 px-10">
       <div className="flex w-full justify-between">
         <Link href="/">
-          <div className="text-3xl">ChainAid</div>
+        <Image
+                  src={"/logo-root.png"}
+                  alt="LOGO"
+                  height={130}
+                  width={130}
+                />
         </Link>
         <nav className="flex items-center">
           <div className="relative">
