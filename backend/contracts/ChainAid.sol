@@ -31,10 +31,12 @@ contract ChainAid {
 
     struct Member {
         uint256 id;
+        string name;
         string email;
         string contactNo;
         address _memberAddress;
         string[] skills;
+        bool isVerified;
     }
 
     uint public orgCount;
@@ -99,7 +101,9 @@ contract ChainAid {
         }
     }
 
-    function isOrganization(address _addr) public view returns (bool) {
+    function isOrganizationRegistered(
+        address _addr
+    ) public view returns (bool) {
         if (RegisteredOrganization[_addr]) return true;
         else return false;
     }
@@ -122,11 +126,44 @@ contract ChainAid {
         allMembers.push(msg.sender);
         Members[msg.sender] = Member(
             memberCount,
+            name,
             email,
             contactNo,
             msg.sender,
-            skills
+            skills,
+            false
         );
+    }
+
+    function isMemberRegsitered(address _addr) public view returns (bool) {
+        if (RegisteredMember[_addr]) return true;
+        else return false;
+    }
+
+    function verifyMember(address _addr) public {
+        require(msg.sender == owner, "you are not the deployer");
+        require(RegisteredMember[_addr], "No member found");
+        Members[_addr].isVerified = true;
+    }
+
+    function isMemberVerified(address _addr) public view returns (bool) {
+        if (Members[_addr].isVerified) return true;
+        else return false;
+    }
+
+    function getMember(address _addr) public view returns (Member memory) {
+        require(RegisteredMember[_addr], "No member found");
+        return Members[_addr];
+    }
+
+    function getMembers() public view returns (Member[] memory) {
+        require(owner == msg.sender);
+        Member[] memory _allMembers = new Member[](allMembers.length);
+
+        for (uint i = 0; i < allMembers.length; i++) {
+            _allMembers[i] = Members[allMembers[i]];
+        }
+        return _allMembers;
     }
 
     function payMember(address payable member) public {
