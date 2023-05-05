@@ -26,21 +26,26 @@ contract ChainAid {
         string contactNo;
         address _orgAddress;
         uint256 balance;
-        address[] supporters;
+        bool isVerified;
     }
 
     struct Member {
-        address[] support_orgs;
-        address self;
+        uint256 id;
+        string email;
+        string contactNo;
+        address _memberAddress;
+        string[] skills;
     }
 
     uint public orgCount;
+    uint public memberCount;
 
     mapping(address => Org) public Organization;
     mapping(address => bool) RegisteredOrganization;
     address[] allOrganizations;
 
     mapping(address => Member) Members;
+    mapping(address => bool) RegisteredMember;
     address[] allMembers;
 
     function addOrg(
@@ -58,10 +63,15 @@ contract ChainAid {
             contactNo,
             msg.sender,
             msg.value,
-            new address[](0)
+            false
         );
         allOrganizations.push(msg.sender);
         console.log("Added org");
+    }
+
+    function getOrg(address _addr) public view returns (Org memory) {
+        require(RegisteredOrganization[_addr], "No org found");
+        return Organization[_addr];
     }
 
     function getAllOrgs() public view returns (Org[] memory) {
@@ -94,17 +104,32 @@ contract ChainAid {
         else return false;
     }
 
-    function addMember(address newOrg) public {
-        Members[msg.sender].support_orgs.push(newOrg);
-        Members[msg.sender].self = msg.sender;
-        Organization[newOrg].supporters.push(msg.sender);
+    function verifyOrganization(address _addr) public {
+        require(msg.sender == owner, "you are not the deployer");
+        require(RegisteredOrganization[_addr], "No org found");
+        Organization[_addr].isVerified = true;
+    }
 
+    function registerMember(
+        string memory name,
+        string memory email,
+        string memory contactNo,
+        string[] memory skills
+    ) public {
+        require(!RegisteredMember[msg.sender]);
+        RegisteredMember[msg.sender] = true;
+        memberCount++;
         allMembers.push(msg.sender);
+        Members[msg.sender] = Member(
+            memberCount,
+            email,
+            contactNo,
+            msg.sender,
+            skills
+        );
     }
 
     function payMember(address payable member) public {
-        require(Members[member].self != address(0), "No member");
-
         uint totalReward = 1e16;
         uint commission = (2 * totalReward) / 100;
         uint remainingReward = totalReward - commission;
