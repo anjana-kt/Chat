@@ -15,7 +15,7 @@ import { showToast } from "./toast";
 
 const Header: FC = () => {
   const { user, userData, connectWallet } = useContext(
-    WalletAuthContext
+    WalletAuthContext,
   ) as WalletAuthContextType;
 
   const [showUserModal, setShowUserModal] = useState(false);
@@ -57,6 +57,30 @@ const Header: FC = () => {
                 />
         </Link>
         <nav className="flex items-center">
+          <div className="flex mr-3">
+            <Link href={"/admin/new"}>
+              <button className="p-5 mt-2 hover:bg-white hover:bg-opacity-20 hover:rounded-3xl">
+                Admin
+              </button>
+            </Link>
+            <Link href={"/org/new"}>
+              <button className="p-5 mt-2 hover:bg-white hover:bg-opacity-20 hover:rounded-3xl">
+                Organization
+              </button>
+            </Link>
+
+            <Link href={"/mentor/new"}>
+              <button className="p-5 mt-2 hover:bg-white hover:bg-opacity-20 hover:rounded-3xl">
+                Support Member
+              </button>
+            </Link>
+
+            <Link href={"/chat"}>
+              <button className="p-5 mt-2 hover:bg-white hover:bg-opacity-20 hover:rounded-3xl">
+                Demo
+              </button>
+            </Link>
+          </div>
           <div className="relative">
             <button
               id="walletBtn"

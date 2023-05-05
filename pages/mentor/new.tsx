@@ -8,22 +8,54 @@ import {
   WalletAuthContext,
   WalletAuthContextType,
 } from "../../contexts/WalletAuthWrapper";
+import { Web3Provider, ExternalProvider } from "@ethersproject/providers";
 
-const Organization: FC = () => {
+const Supporter: FC = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [contact, setContact] = useState<string>("");
-  const [website, setWebsite] = useState<string>("");
   const [value, setValue] = useState<string>("");
+  const [provider, setProvider] = useState<Web3Provider>();
 
   const [loading, setLoading] = useState(false);
 
   const { contract } = useContext(WalletAuthContext) as WalletAuthContextType;
+  const checkIfWalletIsConnected = async ():Promise<number|undefined>=> {
+    
+    return provider?.listAccounts().then((accounts) => {
+
+      if (accounts.length > 0) {
+        console.log(`Wallet is connected with address: ${accounts[0]}`);
+        return 1;
+      } else {
+        console.log('Wallet is not connected');
+        return 0;
+      }
+    });
+  };
+  useEffect(() => {
+    if (typeof window.ethereum !== undefined) {
+      // window.ethereum is defined
+      setProvider(
+        new ethers.providers.Web3Provider(
+          window.ethereum as unknown as ExternalProvider
+        )
+      );
+    } else {
+      // window.ethereum is undefined
+      console.log();
+    }
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    console.log("hi")
+    let walletConnected = await checkIfWalletIsConnected();
+    if (walletConnected == 1) {
+      setLoading(true);
+      console.log("hi");
+    } else {
+      alert("Connect to wallet!");
+    }
 
     // if (contract) {
     //   await contract.addOrg(name,email,contact,website, {
@@ -58,7 +90,7 @@ const Organization: FC = () => {
             className="outline-none font-medium w-full py-2 px-3 rounded-md border border-black border-opacity-20 focus:shadow focus:ring-1 focus:ring-black"
             maxLength={100}
           />
-           <input
+          <input
             id="email"
             type="email"
             value={email}
@@ -70,7 +102,7 @@ const Organization: FC = () => {
             className="outline-none font-medium w-full py-2 px-3 rounded-md border border-black border-opacity-20 focus:shadow focus:ring-1 focus:ring-black"
             maxLength={100}
           />
-           <input
+          <input
             id="contact"
             type="text"
             value={contact}
@@ -82,19 +114,8 @@ const Organization: FC = () => {
             className="outline-none font-medium w-full py-2 px-3 rounded-md border border-black border-opacity-20 focus:shadow focus:ring-1 focus:ring-black"
             maxLength={100}
           />
-           <input
-            id="website"
-            type="text"
-            value={website}
-            onChange={(e) => {
-              setWebsite(e.target.value);
-            }}
-            placeholder="Website"
-            required
-            className="outline-none font-medium w-full py-2 px-3 rounded-md border border-black border-opacity-20 focus:shadow focus:ring-1 focus:ring-black"
-            maxLength={100}
-          />
-           <input
+
+          <input
             id="value"
             type="number"
             value={value}
@@ -114,7 +135,6 @@ const Organization: FC = () => {
               loading ? "bg-opacity-70" : ""
             }`}
           >
-            
             {loading ? (
               <div className="ml-2">
                 <RingSpinner width={20} color="white" />
@@ -129,4 +149,4 @@ const Organization: FC = () => {
   );
 };
 
-export default Organization;
+export default Supporter;
