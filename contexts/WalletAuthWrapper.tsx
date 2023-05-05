@@ -67,7 +67,7 @@ const WalletAuthWrapper: FC<{ children: ReactNode }> = ({ children }) => {
     } else {
       console.log("We have the ethereum object", ethereum);
       const provider = new ethers.providers.Web3Provider(
-        ethereum as unknown as ExternalProvider,
+        ethereum as unknown as ExternalProvider
       );
       setProvider(provider);
     }
@@ -137,7 +137,7 @@ const WalletAuthWrapper: FC<{ children: ReactNode }> = ({ children }) => {
     } else {
       // If window.ethereum is not found then MetaMask is not installed
       alert(
-        "MetaMask is not installed. Please install it to use this app: https://metamask.io/download.html",
+        "MetaMask is not installed. Please install it to use this app: https://metamask.io/download.html"
       );
     }
   };
@@ -166,7 +166,7 @@ const WalletAuthWrapper: FC<{ children: ReactNode }> = ({ children }) => {
       const chainAidContract = new ethers.Contract(
         process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
         contractAbi,
-        signer,
+        signer
       ) as unknown as ChainAidContract;
 
       setContract(chainAidContract);
@@ -182,6 +182,7 @@ const WalletAuthWrapper: FC<{ children: ReactNode }> = ({ children }) => {
         setUserData,
         contract,
         connectWallet,
+            
       }}
     >
       {children}

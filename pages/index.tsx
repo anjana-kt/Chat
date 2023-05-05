@@ -16,15 +16,10 @@ export default function Home() {
       
       <div className={styles.heroText}>
           <h1>ChainAssist</h1>
-          <p className={styles.tagline}>tagline</p>
+          <p className={styles.tagline}>Easy support with easy pay</p>
           {/* <button className={styles.tryBtn}>Try Demo --""> </button> */}
           
-        <Link href={"/chat"} className="p-0 m-1">
-          <button className={styles.tryBtn}>
-            Try Demo
-          </button>
-        </Link>
-
+      
       </div>
         
    
