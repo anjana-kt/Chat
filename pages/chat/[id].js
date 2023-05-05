@@ -12,20 +12,20 @@ export default function Support() {
   const [supporter, setSupporter] = useState(null);
   const [request, setRequest] = useState([]);
 
-  useEffect(() => {
-    Axios.get(`${baseUrl}/api/get_request?id=${id}`)
-      .then((res) => {
-        setRequest(res.data);
-        // console.log();
-      })
+  // useEffect(() => {
+  //   Axios.get(`${baseUrl}/api/get_request?id=${id}`)
+  //     .then((res) => {
+  //       setRequest(res.data);
+  //       // console.log();
+  //     })
       
-      setTimeout(10000, () => {
-        console.log("Hello")
-        setSupporter(res.data[0]["supporter_address"]);
-        console.log(supporter)
+  //     setTimeout(10000, () => {
+  //       console.log("Hello")
+  //       setSupporter(res.data[0]["supporter_address"]);
+  //       console.log(supporter)
 
-      });
-  }, []);
+  //     });
+  // }, []);
 
   return (
     <>
@@ -36,7 +36,7 @@ export default function Support() {
             Waiting for supporter to connect... Refresh periodically
           </h5>
           <h2 className="p-10 bg-opacity-20 rounded-3xl text-xl">
-            Did you like the service?
+            Did you like the service for request id: {id})?
           </h2>
           <button className="p-5 bg-white bg-opacity-20 rounded-3xl text-m m-5">
             YES
@@ -47,7 +47,7 @@ export default function Support() {
 
           <main className={styles.main}>
             <Chat
-              account="0x7ffC260ef58905e9a8F462a4C9b838c21352FF90" //user address
+              account="0x4be5ed1f1087015a10a37bed15fe70b7c23e182e" //user address
               supportAddress="0xd9c1CCAcD4B8a745e191b62BA3fcaD87229CB26d"//support address
               apiKey="xkxLiG74pc.A3n2bD4wWFNafRerPJSx1qj2KMRnmhuoFgsxCJIOzRezxmCgmv5Xc7bqhKLRCTVQ"
               modalTitle="Help line"
