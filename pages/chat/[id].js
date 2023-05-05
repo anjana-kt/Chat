@@ -48,7 +48,7 @@ export default function Support() {
           <main className={styles.main}>
             <Chat
               account="0x4be5ed1f1087015a10a37bed15fe70b7c23e182e" //user address
-              supportAddress="0xd9c1CCAcD4B8a745e191b62BA3fcaD87229CB26d"//support address
+              supportAddress="0x0C28f1edd0784B58E8eB525149E80A4353022968"//support address
               apiKey="xkxLiG74pc.A3n2bD4wWFNafRerPJSx1qj2KMRnmhuoFgsxCJIOzRezxmCgmv5Xc7bqhKLRCTVQ"
               modalTitle="Help line"
               env="staging"
