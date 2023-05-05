@@ -1,0 +1,30 @@
+.page{
+
+    background-color: black  ;
+    
+}
+ 
+.main {
+    min-height: 99vh;
+    padding: 1rem 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+.button{
+    position: absolute;
+    bottom:0;
+    right:0;
+    margin-right: 5vh;
+    margin-bottom: 5vh;
+    border-radius:25px;
+    padding: 1rem 3rem 1rem 3rem;
+    background:linear-gradient( to bottom right,rgba(63,81,181,1) 0%, rgba(171,71,188 ,1) 70%);
+    box-shadow: 1px 1px 30px rgba(81,45,168 ,1);
+    height:6vh;
+    
+    display: flex;
+    align-items: center;
+}

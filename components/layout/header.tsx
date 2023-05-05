@@ -15,7 +15,7 @@ import { showToast } from "./toast";
 
 const Header: FC = () => {
   const { user, userData, connectWallet } = useContext(
-    WalletAuthContext,
+    WalletAuthContext
   ) as WalletAuthContextType;
 
   const [showUserModal, setShowUserModal] = useState(false);
@@ -75,7 +75,7 @@ const Header: FC = () => {
               </button>
             </Link>
 
-            <Link href={"/chat"}>
+            <Link href={"/user/request"}>
               <button className="p-5 mt-2 hover:bg-white hover:bg-opacity-20 hover:rounded-3xl">
                 Demo
               </button>
