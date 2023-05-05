@@ -38,7 +38,7 @@ export default function Home() {
           </button>
         </Link>
 
-        <Link href={"/chat"}>
+        <Link href={"/user/request"}>
           <button className="p-10 bg-white bg-opacity-20 rounded-3xl text-xl">
             Demo
           </button>

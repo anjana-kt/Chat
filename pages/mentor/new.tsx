@@ -137,7 +137,7 @@ const Supporter: FC = () => {
           >
             {loading ? (
               <div className="ml-2">
-                <RingSpinner width={20} color="white" />
+                Creating <RingSpinner width={20} color="white" />
               </div>
             ) : (
               <div>Create</div>
