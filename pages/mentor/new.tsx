@@ -14,6 +14,7 @@ const Supporter: FC = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [contact, setContact] = useState<string>("");
+  const [url, setUrl] = useState<string>("");
   const [value, setValue] = useState<string>("");
   const [provider, setProvider] = useState<Web3Provider>();
 
@@ -56,7 +57,7 @@ const Supporter: FC = () => {
     }
 
     // if (contract) {
-    //   await contract.addOrg(name,email,contact,website, {
+    //   await contract.addOrg(name, email, contact, url, {
     //     value: ethers.utils.parseEther("0.1"),
     //   });
     // }

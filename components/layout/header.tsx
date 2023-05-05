@@ -15,7 +15,7 @@ import { showToast } from "./toast";
 
 const Header: FC = () => {
   const { user, userData, connectWallet } = useContext(
-    WalletAuthContext,
+    WalletAuthContext
   ) as WalletAuthContextType;
 
   const [showUserModal, setShowUserModal] = useState(false);
