@@ -4,8 +4,8 @@ import {
   BytesLike as Arrayish,
   BigNumber,
   BigNumberish,
-} from 'ethers';
-import { EthersContractContextV5 } from 'ethereum-abi-types-generator';
+} from "ethers";
+import { EthersContractContextV5 } from "ethereum-abi-types-generator";
 
 export type ContractContext = EthersContractContextV5<
   ChainAidContract,
@@ -57,19 +57,29 @@ export interface ContractCallOverrides {
 export type ChainAidContractEvents = undefined;
 export interface ChainAidContractEventsContext {}
 export type ChainAidContractMethodNames =
-  | 'new'
-  | 'addMember'
-  | 'addOrg'
-  | 'getAllOrgs'
-  | 'owner'
-  | 'payMember';
+  | "new"
+  | "addMember"
+  | "addOrg"
+  | "getAllOrgs"
+  | "owner"
+  | "payMember";
 export interface OrgResponse {
+  id: BigNumber;
+  0: BigNumber;
   name: string;
-  0: string;
+  1: string;
+  email: string;
+  2: string;
+  url: string;
+  3: string;
+  contactNo: string;
+  4: string;
+  _orgAddress: string;
+  5: string;
   balance: BigNumber;
-  1: BigNumber;
-  supporters: string[];
-  2: string[];
+  6: BigNumber;
+  isVerified: boolean;
+  7: boolean;
 }
 export interface ChainAidContract {
   /**
@@ -78,7 +88,7 @@ export interface ChainAidContract {
    * StateMutability: payable
    * Type: constructor
    */
-  'new'(overrides?: ContractTransactionOverrides): Promise<ContractTransaction>;
+  "new"(overrides?: ContractTransactionOverrides): Promise<ContractTransaction>;
   /**
    * Payable: false
    * Constant: false
@@ -88,7 +98,7 @@ export interface ChainAidContract {
    */
   addMember(
     newOrg: string,
-    overrides?: ContractTransactionOverrides
+    overrides?: ContractTransactionOverrides,
   ): Promise<ContractTransaction>;
   /**
    * Payable: true
@@ -99,7 +109,10 @@ export interface ChainAidContract {
    */
   addOrg(
     name: string,
-    overrides?: ContractTransactionOverrides
+    email: string,
+    url: string,
+    contactNo: string,
+    overrides?: ContractTransactionOverrides,
   ): Promise<ContractTransaction>;
   /**
    * Payable: false
@@ -124,6 +137,6 @@ export interface ChainAidContract {
    */
   payMember(
     member: string,
-    overrides?: ContractTransactionOverrides
+    overrides?: ContractTransactionOverrides,
   ): Promise<ContractTransaction>;
 }

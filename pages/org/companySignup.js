@@ -3,15 +3,14 @@ import React from "react";
 import { Form, Card } from "react-bootstrap";
 
 function CompanyDetails() {
-  
-    const [formData, setFormData] = useState({
-      companyName: "",
-      companyEmail: "",
-      companyContactNumber: "",
-      companyWebsite: "",
-      depositValue: 0,
-    });
-    const handleChange = (event) => {
+  const [formData, setFormData] = useState({
+    companyName: "",
+    companyEmail: "",
+    companyContactNumber: "",
+    companyWebsite: "",
+    depositValue: 0,
+  });
+  const handleChange = (event) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
@@ -46,7 +45,7 @@ function CompanyDetails() {
               onChange={handleChange}
             />
             <Form.Text className="text-muted">
-              (We'll never share the email with anyone else)
+              (We will never share the email with anyone else)
             </Form.Text>
           </Form.Group>
           <Form.Label>Company contact number</Form.Label>
@@ -85,7 +84,6 @@ function CompanyDetails() {
         <button className="btn mt-3" onClick={handleSubmit}>
           Submit
         </button>
-       
       </div>
     </div>
   );
