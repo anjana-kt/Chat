@@ -22,6 +22,10 @@ export default function Home() {
         
       <div className={styles.about}>
         About
+        <p className={styles.tagline}>
+        An easily pluggable SDK that can provide chat-help for DApps by connecting resource people throughout the world.    
+        </p>
+        
       </div>        
       </main>
     </>
