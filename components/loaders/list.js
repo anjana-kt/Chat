@@ -1,10 +1,11 @@
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import baseUrl from "../../components/baseUrl";
+import baseUrl from "../baseUrl";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
-function list() {
+
+function List() {
   const [requests, setRequests] = useState([]);
   const [accepted, setAccepted] = useState(false);
   const [provider, setProvider] = useState();
@@ -64,7 +65,7 @@ function list() {
           <main>
             {requests.map((request, index) => {
               return (
-                <div className="card rounded m-5 bg-black w-full p-5 shadow-md lg:max-w-lg">
+                <div key={`key${index}`} className="card rounded m-5 bg-black w-full p-5 shadow-md lg:max-w-lg">
                   <div className="space-y-2">
                     <h3 className="text-2xl font-semibold">
                       Request ID: {request.req_id}
@@ -87,4 +88,4 @@ function list() {
   );
 }
 
-export default list;
+export default List;

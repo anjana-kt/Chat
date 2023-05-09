@@ -36,7 +36,7 @@ export default function Support() {
             Waiting for supporter to connect... Refresh periodically
           </h5>
           <h2 className="p-10 bg-opacity-20 rounded-3xl text-xl">
-            Did you like the service for request id: {id})?
+            Did you like the service for request id ?
           </h2>
           <button className="p-5 bg-white bg-opacity-20 rounded-3xl text-m m-5">
             YES

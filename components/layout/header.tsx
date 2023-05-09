@@ -75,7 +75,7 @@ const Header: FC = () => {
               </button>
             </Link>
 
-            <Link href={"/chat/[id]"}>
+            <Link href={"/chat"}>
               <button className="p-5 mt-2 hover:bg-white hover:bg-opacity-20 hover:rounded-3xl">
                 Demo
               </button>
